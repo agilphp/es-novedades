@@ -1,0 +1,75 @@
+openapi: 3.0.1
+servers:
+  - description: Index swagger
+    #url produccion
+    url: https://api.mibanco.com.co
+info:
+  description: Servicio de entidad Novedades.
+  version: 0.0.1
+  title: NovedadesES
+  contact:
+    name: MiBanco
+    url: https://www.mibanco.com.co/
+    email: api@mibanco.com.co
+  license:
+    name: GNU GPLv3
+    url: ‘https://www.gnu.org/licenses/gpl-3.0.html’
+tags:
+  - name: Crear novedad cliente cdt digital
+    description: Crear novedad cliente cdt digital
+#----------------------------
+#Endpoints del Entidad
+#----------------------------
+paths:
+  /v1/es/novedadCDTDigital:
+    post:
+      tags:
+        - Crear novedad cliente cdt digital
+      operationId: crearNovedadClienteCDT
+      requestBody:
+        description: Crear novedad cliente cdt digital
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CrearNovedadClienteCDTInput"
+      responses:
+        "200":
+          description: Novedad cdt digital creado.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/NovedadCDTDigitalType"
+        "400":
+          description: "Parámetros de entrada no validos."
+        "404":
+          description: "No se encuentra la novedad."
+#---------------------------------------------
+#Se declaran los Modelos/Schemas del servicio
+#---------------------------------------------
+components:
+  schemas:
+    NovedadCDTDigitalType:
+      type: object
+      properties:
+        id:
+          type: string
+        numeroDocumento:
+          type: string
+        codigoNovedad:
+          $ref: "#/components/schemas/NovedadCDTEnum"
+    NovedadCDTEnum:
+      type: string
+      enum:
+        - e01idn
+        - 7943
+        - Falta definir
+        - 220
+    CrearNovedadClienteCDTInput:
+      type: object
+      properties:
+        numeroDocumento:
+          type: string
+        codigoNovedad:
+          $ref: "#/components/schemas/NovedadCDTEnum"
